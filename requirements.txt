@@ -1,0 +1,9 @@
+# Dependências de execução (leves).
+# O modelo de embeddings (sentence-transformers + PyTorch, vários GB)
+# está separado em requirements-ml.txt para o CI não ficar lento.
+fastapi>=0.115
+uvicorn[standard]>=0.30
+psycopg[binary]>=3.2
+pgvector>=0.3
+python-dotenv>=1.0
+anthropic>=0.40

@@ -1,0 +1,3 @@
+# Dependências de desenvolvimento e testes (usadas também no CI).
+pytest>=8.0
+httpx>=0.27

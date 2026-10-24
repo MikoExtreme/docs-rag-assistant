@@ -1,0 +1,4 @@
+# Dependências pesadas: embeddings locais (puxa o PyTorch).
+# Instalar só quando fores mesmo gerar embeddings:
+#   pip install -r requirements.txt -r requirements-ml.txt
+sentence-transformers>=3.0

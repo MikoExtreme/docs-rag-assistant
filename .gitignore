@@ -1,0 +1,28 @@
+# Segredos
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Cache de modelos e dados locais
+.cache/
+huggingface/
+
+# Resultados de avaliação gerados (mantém só os que quiseres citar no README)
+eval/results/
+
+# Editores / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
