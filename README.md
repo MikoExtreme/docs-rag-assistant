@@ -33,7 +33,7 @@ tests/      # testes (pytest)
 
 ## Como correr
 
-Requisitos: Python 3.12+, Docker.
+Requisitos: Python 3.11 ou superior (testado em 3.11 localmente e em 3.12 no CI), Docker.
 
 ```bash
 # 1. Configuração
@@ -73,11 +73,32 @@ recria a base de dados com `docker compose down -v && docker compose up -d`.
 
 _Por preencher — só depois de medir._ Deve incluir:
 
-- **Documentos:** quantos e de que tipo (TODO).
+
+- **Documentos:** 8 documentos `.docx` (resumos próprios de cibersegurança), entre 199 e 2 930 caracteres.
 - **Perguntas:** quantas, como foram escritas, e onde estão (`eval/questions.jsonl`) (TODO).
 - **Hit rate@k:** valores para k = ... (TODO).
 - **Comparação de prompts:** v1 vs v2 e como julguei as respostas (TODO).
 - **Custo e latência:** média por pergunta (TODO).
+
+
+### Tamanho dos chunks
+
+O modelo de embeddings (`paraphrase-multilingual-MiniLM-L12-v2`) lê no máximo 128 tokens,
+e o excesso é ignorado. Medi o número de tokens dos chunks do corpus (8 documentos):
+
+| Configuração | Chunks | Máximo de tokens | Chunks acima de 128 |
+|---|---|---|---|
+| 300 caracteres, overlap 50 | 39 | 126 | 0 |
+| 800 caracteres, overlap 100 | 16 | 296 | 12 |
+
+Com 800 caracteres, 12 de 16 chunks excediam o limite e seriam truncados no embedding.
+Escolhi 300 com overlap de 50. O máximo de 126 tokens fica no limite, por isso não aumentei
+o tamanho. O hit rate@k de cada configuração está na lista acima (por preencher).
+
+Observação: com um único par de frases de teste, a semelhança coseno entre duas frases
+sobre o mesmo tema foi 0,38 e entre frases de temas diferentes 0,22. É um exemplo isolado,
+não uma medida de qualidade do modelo.
+
 
 ## Onde falhou e porquê
 
@@ -87,5 +108,4 @@ e o que mudei ou deixei por resolver (TODO).
 
 ## Limitações
 
-- Avaliação feita sobre um conjunto pequeno de documentos e perguntas; os números
-  indicam tendências, não garantias.
+- O corpus é muito pequeno (8 documentos curtos, 39 chunks com 300/50). Com tão poucos chunks, um k alto devolve uma fração grande do corpus, por isso os valores de hit rate@k só são informativos para k pequeno (1 ou 3).
